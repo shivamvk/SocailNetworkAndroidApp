@@ -19,7 +19,7 @@ The three fragments are **FeedFragment**, **FriendRequestsFragment** and **Profi
 
 You can upload new post with images or without them the **FeedAdapter** will handle it accordingly and diplay the feed.<br>
 While uplaodng the post you can select if you want or not to attach an image with it.<br>
-<img src="https://github.com/shivamvk/SocailNetworkAndroidApp/blob/master/images/Screenshot_20180704-161537.jpg" height="400px" width="240px">
+<img src="https://github.com/shivamvk/SocailNetworkAndroidApp/blob/master/images/Screenshot_20180704-161537.jpg" height="400px" width="240px"><br>
 You can send **friend request** to different people.<br>
 And you can also search for users with the **search option in action bar**.<br>
 <img src="https://github.com/shivamvk/SocailNetworkAndroidApp/blob/master/images/Screenshot_20180704-154903.jpg" height="400px" width="240px">
