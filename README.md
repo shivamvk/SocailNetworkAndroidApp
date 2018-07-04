@@ -9,6 +9,7 @@ There are basic login and signup activities with client side validations.
 <img src="https://github.com/shivamvk/SocailNetworkAndroidApp/blob/master/images/Screenshot_20180704-154812.jpg" height="400px" width="240px"></p>
 
 After signing up there is a **SelectProfilePicture** activity.<br>
+All the images are stored in the **firebase storage** and the link to them is stored in the mysql database<br><br>
 And then there is this home activity which have three **fragments** with a **tablayout with viewpager**.<br>
 The three fragments are **FeedFragment**, **FriendRequestsFragment** and **ProfileFragment**.
 <br>
