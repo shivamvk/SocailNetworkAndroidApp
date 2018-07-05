@@ -1,5 +1,6 @@
 # SocailNetworkAndroidApp
 A social networking android application with backend on java and mysql.
+**The database and the scripts are uploaded on AWS EC2 Instance**
 
 The scripts are written in jsp and use apache tomcat server to run.
 
