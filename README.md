@@ -2,6 +2,9 @@
 A social networking android application with backend on java and mysql.<br>
 **The database and the scripts are uploaded on AWS EC2 Instance**
 
+Here is the download link to the app. Feel free to give any sort of feedbacks.<br>
+https://drive.google.com/open?id=1zwQ0FS6x_p_gRn5qTj6Hh9dqZ3yIpfym
+
 The scripts are written in jsp and use apache tomcat server to run.
 
 # Project Explained
