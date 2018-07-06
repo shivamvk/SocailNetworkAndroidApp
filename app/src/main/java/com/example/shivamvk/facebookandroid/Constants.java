@@ -12,4 +12,8 @@ public class Constants {
     public static final String UPLOAD_WALL_POST = "http://13.250.198.160:8080/FacebookAndroid/uploadwallpost.jsp";
     public static final String GET_USER_FEED = "http://13.250.198.160:8080/FacebookAndroid/getfeed.jsp";
     public static final String GET_USER_DETAILS = "http://13.250.198.160:8080/FacebookAndroid/getuserdetails.jsp";
+    public static final String LIKE_POST = "http://13.250.198.160:8080/FacebookAndroid/likepost.jsp";
+    public static final String UNLIKE_POST = "http://13.250.198.160:8080/FacebookAndroid/unlikepost.jsp";
+    public static final String GET_LIKED_BY = "http://13.250.198.160:8080/FacebookAndroid/getlikedby.jsp";
+    public static final String ALREADY_LIKED = "http://13.250.198.160:8080/FacebookAndroid/alreadyliked.jsp";
 }

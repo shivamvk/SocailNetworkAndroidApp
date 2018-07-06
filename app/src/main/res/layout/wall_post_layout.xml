@@ -62,29 +62,67 @@
                 android:layout_marginBottom="8dp"
                 android:id="@+id/iv_wall_post_item_post_image"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="Liked by: 10"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="8dp">
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_weight="50"
-                    android:src="@drawable/ic_thumb_up_black_24dp"/>
+                    android:gravity="center">
 
-                <ImageView
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="16dp"
+                        android:clickable="true"
+                        android:id="@+id/iv_wall_post_like_button"
+                        android:src="@drawable/ic_thumb_up_black_24dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="0"
+                        android:id="@+id/tv_wall_post_liked_by"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:background="@drawable/ronded_button"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_weight="50"
-                    android:src="@drawable/ic_comment_black_24dp"/>
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:id="@+id/iv_wall_post_comment_button"
+                        android:layout_marginRight="16dp"
+                        android:src="@drawable/ic_comment_black_24dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_wall_post_comments"
+                        android:text="0"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:background="@drawable/ronded_button"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
