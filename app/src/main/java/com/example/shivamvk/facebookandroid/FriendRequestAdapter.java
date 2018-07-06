@@ -45,8 +45,12 @@ public class FriendRequestAdapter extends RecyclerView.Adapter<FriendRequestAdap
         final User currentUser = LISTOFPENDINGREQUESTS.get(position);
         holder.tvFriendRequestUserName.setText(currentUser.getUserName());
         holder.tvFriendRequestUserEmail.setText(currentUser.getUserEmail());
+
+        String imgurl = currentUser.getUserImage();
+        imgurl = imgurl.replace("/profilepicture/","%2Fprofilepicture%2F");
+
         Picasso.get()
-                .load(currentUser.getUserImage())
+                .load(imgurl)
                 .placeholder(R.drawable.placeholderboy)
                 .into(holder.ivFriendRequestUserImage);
         Log.i("error1", currentUser.getUserName());

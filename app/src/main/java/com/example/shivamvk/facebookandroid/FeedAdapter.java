@@ -9,7 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -31,7 +41,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         WallPosts currentPost = LIST_Of_POSTS.get(position);
         String postImage = currentPost.getPostImage();
         if (postImage.equals("NOIMAGE")){
@@ -45,9 +55,42 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                     .into(holder.ivWallPostsImage);
         }
 
+        final String[] userimage = new String[1];
+        final String[] username = new String[1];
+
+        String url = Constants.GET_USER_DETAILS + "?email=" + currentPost.getPostBy();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("user");
+                            JSONObject currentuser = jsonArray.getJSONObject(0);
+                            userimage[0] = currentuser.getString("userimage");
+                            userimage[0] = userimage[0].replace("/profilepicture/","%2Fprofilepicture%2F");
+                            Picasso.get()
+                                    .load(userimage[0])
+                                    .placeholder(R.drawable.placeholderboy)
+                                    .into(holder.ivWallPostsUserImage);
+                            holder.tvWallPostsUserName.setText(currentuser.getString("username"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
         holder.tvWallPostsMessage.setText(currentPost.getPostMessage());
 
-        holder.tvWallPostsUserName.setText(currentPost.getPostBy());
     }
 
     @Override

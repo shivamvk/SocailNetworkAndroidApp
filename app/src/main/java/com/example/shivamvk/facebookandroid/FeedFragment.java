@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,8 @@ public class FeedFragment extends Fragment {
     private TextView tvFeedFragmentUserName;
     private TextView tvFeedFragmentWhatsOnMind;
     private RecyclerView rvFeedFragment;
+    private ProgressBar pbFeedFragment;
+    private SwipeRefreshLayout swipRefreshFeed;
 
     private List<WallPosts> LIST_OF_FEED;
 
@@ -60,7 +64,22 @@ public class FeedFragment extends Fragment {
         rvFeedFragment.setHasFixedSize(true);
         rvFeedFragment.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        pbFeedFragment = view.findViewById(R.id.pb_feed_fragment);
+        swipRefreshFeed = view.findViewById(R.id.swipe_refresh_feed_fragment);
+        swipRefreshFeed.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         LIST_OF_FEED = new ArrayList<>();
+
+        swipRefreshFeed.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                LIST_OF_FEED.clear();
+                loadFeed();
+            }
+        });
 
         tvFeedFragmentUserName.setText(SharedPrefManager.getInstance(getContext()).getUserName());
 
@@ -105,6 +124,7 @@ public class FeedFragment extends Fragment {
                             }
                             FeedAdapter feedAdapter = new FeedAdapter(getContext(),LIST_OF_FEED);
                             rvFeedFragment.setAdapter(feedAdapter);
+                            pbFeedFragment.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -118,5 +138,6 @@ public class FeedFragment extends Fragment {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+        swipRefreshFeed.setRefreshing(false);
     }
 }
