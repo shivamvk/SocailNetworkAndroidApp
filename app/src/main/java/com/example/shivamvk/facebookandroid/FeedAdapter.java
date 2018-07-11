@@ -1,13 +1,18 @@
 package com.example.shivamvk.facebookandroid;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +107,36 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 likebuttonclicked(holder,currentPost);
             }
         });
+
+        holder.ivWallPostsCommentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCommentsDialog(currentPost);
+            }
+        });
+
+    }
+
+    private void showCommentsDialog(WallPosts currentPost) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        final AlertDialog alertDialog = builder.create();
+        View view = LayoutInflater.from(context).inflate(R.layout.comment_dialog_layout, null);
+        view.findViewById(R.id.iv_close_comment_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        RecyclerView recyclerViewComments = view.findViewById(R.id.rv_comments);
+        recyclerViewComments.setHasFixedSize(true);
+        recyclerViewComments.setLayoutManager(new LinearLayoutManager(context));
+        ProgressBar pbComments = view.findViewById(R.id.pb_comments);
+        loadComments(recyclerViewComments, pbComments, currentPost);
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
+
+    private void loadComments(RecyclerView recyclerViewComments, ProgressBar progressBar, WallPosts currentPost) {
 
     }
 
