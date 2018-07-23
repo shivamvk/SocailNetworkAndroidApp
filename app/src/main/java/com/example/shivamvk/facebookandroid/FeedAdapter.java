@@ -1,6 +1,5 @@
 package com.example.shivamvk.facebookandroid;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -8,13 +7,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,24 +28,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
-
     private Context context;
     private List<WallPosts> LIST_Of_POSTS;
-
     public FeedAdapter(Context context, List<WallPosts> LIST_Of_POSTS) {
         this.context = context;
         this.LIST_Of_POSTS = LIST_Of_POSTS;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wall_post_layout, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final WallPosts currentPost = LIST_Of_POSTS.get(position);
@@ -55,16 +49,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             holder.ivWallPostsImage.setVisibility(View.GONE);
         } else {
             postImage = postImage.replace("postImages/", "postImages%2F");
-
             Picasso.get()
                     .load(postImage)
                     .placeholder(R.drawable.imageloading)
                     .into(holder.ivWallPostsImage);
         }
-
         final String[] userimage = new String[1];
         final String[] username = new String[1];
-
         String url = Constants.GET_USER_DETAILS + "?email=" + currentPost.getPostBy();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -89,18 +80,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
-
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
-
         holder.tvWallPostsMessage.setText(currentPost.getPostMessage());
-
         getLikedBy(holder,currentPost);
         checkifalreadylikedbycurrentuser(holder,currentPost);
-
         holder.ivWallPostsLikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,16 +94,35 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
             }
         });
-
         holder.ivWallPostsCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showCommentsDialog(currentPost);
             }
         });
-
+        holder.tvWallPostsPopupMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu=new PopupMenu(context,holder.tvWallPostsPopupMenu);
+                popupMenu.inflate(R.menu.wall_post_popup_menu);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.popup_menu_edit:
+                                break;
+                            case R.id.popup_menu_delete:
+                                break;
+                            case R.id.popup_menu_report:
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
-
     private void showCommentsDialog(WallPosts currentPost) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         final AlertDialog alertDialog = builder.create();
@@ -136,11 +141,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         alertDialog.setView(view);
         alertDialog.show();
     }
-
     private void loadComments(RecyclerView recyclerViewComments, ProgressBar progressBar, WallPosts currentPost) {
-
     }
-
     private void checkifalreadylikedbycurrentuser(final ViewHolder holder, WallPosts currentPost) {
         String url = Constants.ALREADY_LIKED + "?postid=" + currentPost.getPostId() +
                 "&useremail=" + SharedPrefManager.getInstance(context).getUserEmail();
@@ -159,13 +161,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
-
     private void getLikedBy(final ViewHolder holder, WallPosts currentPost) {
         String url = Constants.GET_LIKED_BY + "?postId=" + currentPost.getPostId();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -179,18 +179,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
-
     private void likebuttonclicked(ViewHolder holder,WallPosts currentPost) {
         Drawable currentlikebuttonimage = holder.ivWallPostsLikeButton.getDrawable();
         Drawable greylikebuttonimage = context.getResources().getDrawable(R.drawable.ic_thumb_up_black_24dp);
         Drawable greenlikebuttonimage = context.getResources().getDrawable(R.drawable.ic_thumb_up_green_24dp);
-
         if (currentlikebuttonimage.getConstantState().equals(greylikebuttonimage.getConstantState())){
             holder.ivWallPostsLikeButton.setImageResource(R.drawable.ic_thumb_up_green_24dp);
             likepost(holder, currentPost);
@@ -199,7 +196,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             unlikepost(holder, currentPost);
         }
     }
-
     private void unlikepost(final ViewHolder holder, WallPosts currentPost) {
         String url = Constants.UNLIKE_POST + "?postid=" + currentPost.getPostId() + "&useremail=" + SharedPrefManager.getInstance(context).getUserEmail();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -212,13 +208,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
-
     private void likepost(final ViewHolder holder, WallPosts currentPost) {
         String url = Constants.LIKE_POST + "?postid=" +currentPost.getPostId() + "&useremail=" + SharedPrefManager.getInstance(context).getUserEmail();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -231,20 +225,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                     }
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
     }
-
     @Override
     public int getItemCount() {
         return LIST_Of_POSTS.size();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         private TextView tvWallPostsUserName;
         private TextView tvWallPostsMessage;
         private ImageView ivWallPostsUserImage;
@@ -253,7 +243,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         private ImageView ivWallPostsCommentButton;
         private TextView tvWallPostsLikedBy;
         private TextView tvWallPostsComments;
-
+        private TextView tvWallPostsPopupMenu;
         public ViewHolder(View itemView) {
             super(itemView);
             tvWallPostsUserName = itemView.findViewById(R.id.tv_wall_post_user_name);
@@ -264,7 +254,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             ivWallPostsCommentButton = itemView.findViewById(R.id.iv_wall_post_comment_button);
             tvWallPostsLikedBy = itemView.findViewById(R.id.tv_wall_post_liked_by);
             tvWallPostsComments = itemView.findViewById(R.id.tv_wall_post_comments);
+            tvWallPostsPopupMenu=itemView.findViewById(R.id.tv_wall_post_popup_menu);
         }
     }
-
 }
