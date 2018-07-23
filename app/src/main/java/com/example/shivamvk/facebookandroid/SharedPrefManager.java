@@ -11,7 +11,7 @@ public class SharedPrefManager {
     private static final String SHARED_PREF_NAME = "MySharedPref";
 
     private SharedPrefManager(Context context) {
-        this.context = context;
+        SharedPrefManager.context = context;
     }
 
     public static synchronized SharedPrefManager getInstance(Context context) {
@@ -23,10 +23,7 @@ public class SharedPrefManager {
 
     public boolean isLoggenIn(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if(sharedPreferences.getString("userEmail", null) != null){
-            return true;
-        }
-        return false;
+        return sharedPreferences.getString("userEmail", null) != null;
     }
 
     public void resgiterCurrentUser(String userName, String userImage, String userEmail){
