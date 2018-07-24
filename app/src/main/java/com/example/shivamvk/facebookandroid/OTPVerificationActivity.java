@@ -36,15 +36,18 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
 
         sendOTP();
 
+        btSubmitButton=findViewById(R.id.bt_otp_verification_activity_submit_button);
         btSubmitButton.setEnabled(false);
 
-
-        btSubmitButton=findViewById(R.id.bt_otp_verification_activity_submit_button);
 
         et1OTPVerification=findViewById(R.id.et1_otp_verification);
         et2OTPVerification=findViewById(R.id.et2_otp_verification);
         et3OTPVerification=findViewById(R.id.et3_otp_verification);
         et4OTPVerification=findViewById(R.id.et4_otp_verification);
+        et1OTPVerification.addTextChangedListener(this);
+        et2OTPVerification.addTextChangedListener(this);
+        et3OTPVerification.addTextChangedListener(this);
+        et4OTPVerification.addTextChangedListener(this);
         String et1OTP=et1OTPVerification.getText().toString();
         String et2OTP=et2OTPVerification.getText().toString();
         String et3OTP=et3OTPVerification.getText().toString();

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
+            <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="12dp"
