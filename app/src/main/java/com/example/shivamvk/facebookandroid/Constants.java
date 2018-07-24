@@ -16,4 +16,6 @@ public class Constants {
     public static final String UNLIKE_POST = "http://13.250.198.160:8080/FacebookAndroid/unlikepost.jsp";
     public static final String GET_LIKED_BY = "http://13.250.198.160:8080/FacebookAndroid/getlikedby.jsp";
     public static final String ALREADY_LIKED = "http://13.250.198.160:8080/FacebookAndroid/alreadyliked.jsp";
+    public static final String SEND_OTP = "http://13.250.198.160:8080/FacebookAndroid/sendotp.jsp";
+
 }

@@ -34,8 +34,10 @@
             android:name=".NewPostActivity"
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".SelectUserImage" />
-        <activity android:name=".SearchResultsActivity"
+        <activity
+            android:name=".SearchResultsActivity"
             android:parentActivityName=".HomeActivity" />
+        <activity android:name=".OTPVerificationActivity"></activity>
     </application>
 
 </manifest>
