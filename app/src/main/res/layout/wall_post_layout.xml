@@ -22,8 +22,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
-                <ImageView
-                    android:scaleType="centerCrop"
+                <com.mikhaellopez.circularimageview.CircularImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/placeholderboy"

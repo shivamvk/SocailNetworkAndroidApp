@@ -18,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp">
 
-            <ImageView
-                android:scaleType="centerCrop"
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="12dp"
