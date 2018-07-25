@@ -68,7 +68,7 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
         });
     }
 
-    private String generateOTP(){
+    /*private String generateOTP(){
         int otpLength=4;
         String OTP;
         SecureRandom secureRandom=new SecureRandom();
@@ -83,29 +83,26 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
         }
         OTP=stringBuilder.toString();
         return OTP;
-    }
+    }*/
 
     private void sendOTP()
     {
 
         final String email=SharedPrefManager.getInstance(this).getUserEmail();
 
-        OTP=generateOTP();
-
-
-        String url = Constants.SEND_OTP + "?email=" + email + "?otp=" + OTP;
+        String url = Constants.SEND_OTP + "?email=" + email;
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-
+                        response = response.trim();
+                        OTP = response;
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(OTPVerificationActivity.this, "error", Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(this);
