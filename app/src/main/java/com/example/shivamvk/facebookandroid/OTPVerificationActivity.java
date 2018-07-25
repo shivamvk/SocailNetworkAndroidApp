@@ -44,10 +44,12 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
         et2OTPVerification=findViewById(R.id.et2_otp_verification);
         et3OTPVerification=findViewById(R.id.et3_otp_verification);
         et4OTPVerification=findViewById(R.id.et4_otp_verification);
+
         et1OTPVerification.addTextChangedListener(this);
         et2OTPVerification.addTextChangedListener(this);
         et3OTPVerification.addTextChangedListener(this);
         et4OTPVerification.addTextChangedListener(this);
+
         String et1OTP=et1OTPVerification.getText().toString();
         String et2OTP=et2OTPVerification.getText().toString();
         String et3OTP=et3OTPVerification.getText().toString();
