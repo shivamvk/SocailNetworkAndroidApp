@@ -92,7 +92,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 likebuttonclicked(holder,currentPost);
-                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show();
             }
         });
         holder.ivWallPostsCommentButton.setOnClickListener(new View.OnClickListener() {
