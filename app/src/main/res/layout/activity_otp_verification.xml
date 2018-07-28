@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#f2f2f2"
+    android:layout_height="match_parent"
+    tools:context=".OTPVerificationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:text="An OTP has been sent to xyz@xyz.xyz"
+            android:textColor="@android:color/holo_green_dark" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enter OTP"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:layout_margin="22dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="44dp"
+                android:maxLength="1"
+                android:textSize="22sp"
+                android:id="@+id/et1_otp_verification"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:layout_margin="5dp"
+                android:text=""
+                android:nextFocusRight="@id/et2_otp_verification">
+            <requestFocus/>
+            </EditText>
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="44dp"
+                android:maxLength="1"
+                android:textSize="22sp"
+                android:layout_margin="5dp"
+                android:id="@+id/et2_otp_verification"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:text=""/>
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="44dp"
+                android:maxLength="1"
+                android:layout_margin="5dp"
+                android:id="@+id/et3_otp_verification"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:text=""/>
+            <EditText
+                android:layout_width="40dp"
+                android:layout_height="44dp"
+                android:maxLength="1"
+                android:textSize="22sp"
+                android:layout_margin="5dp"
+                android:id="@+id/et4_otp_verification"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:text=""/>
+        </LinearLayout>
+        <Button
+            android:layout_margin="20dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:textSize="16sp"
+            android:text="Submit"
+            android:background="@android:color/holo_green_light"
+            android:id="@+id/bt_otp_verification_activity_submit_button"/>
+        <TextView
+            android:layout_width="150dp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:id="@+id/tv_resend_otp"
+            android:layout_height="40dp"
+            android:text="Resend OTP (30)"
+            android:background="@drawable/textview_box"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

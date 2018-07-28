@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true">
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -34,8 +36,10 @@
             android:name=".NewPostActivity"
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".SelectUserImage" />
-        <activity android:name=".SearchResultsActivity"
+        <activity
+            android:name=".SearchResultsActivity"
             android:parentActivityName=".HomeActivity" />
+        <activity android:name=".OTPVerificationActivity"></activity>
     </application>
 
 </manifest>
