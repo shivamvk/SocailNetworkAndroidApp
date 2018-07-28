@@ -132,7 +132,6 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SignupActivity.this, OTPVerificationActivity.class);
                         intent.putExtra("otp",OTP);
-                        Toast.makeText(SignupActivity.this, "OTP :"+OTP, Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         finish();
                         overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);

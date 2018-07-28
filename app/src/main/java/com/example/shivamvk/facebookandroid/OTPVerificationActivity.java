@@ -41,10 +41,8 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
 
         resendOTPTimer();
 
-        //sendOTP();
 
         OTP=getIntent().getStringExtra("otp");
-        Toast.makeText(this, "OTP A"+OTP, Toast.LENGTH_SHORT).show();
 
         btSubmitButton=findViewById(R.id.bt_otp_verification_activity_submit_button);
         btSubmitButton.setEnabled(false);
@@ -79,30 +77,6 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
     }
 
 
-    private void sendOTP()
-    {
-
-        final String email=SharedPrefManager.getInstance(this).getUserEmail();
-
-        String url = Constants.SEND_OTP + "?email=" + email;
-        StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        response = response.trim();
-                        OTP = response;
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(OTPVerificationActivity.this, "error", Toast.LENGTH_SHORT).show();
-                    }
-                });
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
     private void verifyOTP(){
         String et1OTP=et1OTPVerification.getText().toString();
         String et2OTP=et2OTPVerification.getText().toString();
@@ -112,10 +86,7 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
 
 
         final String userOTP=et1OTP+et2OTP+et3OTP+et4OTP;
-        Log.i("OTP ENTERED", "onCreate: "+userOTP);
-
-        Toast.makeText(this, "OTP FINAL"+userOTP, Toast.LENGTH_SHORT).show();
-
+        
         ProgressDialog progressDialog=new ProgressDialog(OTPVerificationActivity.this);
         progressDialog.setMessage("Verifying OTP...");
         progressDialog.setCanceledOnTouchOutside(false);
