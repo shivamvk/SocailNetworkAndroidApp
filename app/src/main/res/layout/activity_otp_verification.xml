@@ -89,7 +89,18 @@
             android:layout_height="50dp"
             android:textSize="16sp"
             android:text="Submit"
+            android:background="@android:color/holo_green_light"
             android:id="@+id/bt_otp_verification_activity_submit_button"/>
+        <TextView
+            android:layout_width="150dp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:id="@+id/tv_resend_otp"
+            android:layout_height="40dp"
+            android:text="Resend OTP (30)"
+            android:background="@drawable/textview_box"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

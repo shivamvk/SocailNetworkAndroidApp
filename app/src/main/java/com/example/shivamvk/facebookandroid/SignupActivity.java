@@ -21,6 +21,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText etSignupPassword;
     private Button btSignupButton;
     private TextView tvSignupActivityLoginButton;
+    private String OTP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,16 +84,17 @@ public class SignupActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        progressDialog.dismiss();
                         response = response.trim();
                         switch (response) {
                             case "okay":
-                                Toast.makeText(SignupActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
                                 SharedPrefManager.getInstance(SignupActivity.this).resgiterCurrentUser(name, "NULL", email);
-                                startActivity(new Intent(SignupActivity.this, OTPVerificationActivity.class));
+
+                                sendOTP(progressDialog);
+                                /*startActivity(new Intent(SignupActivity.this, OTPVerificationActivity.class));
                                 finish();
                                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                                 progressDialog.dismiss();
+                                */
                                 break;
                             case "error":
                                 etSignupEmail.setError("Email already exists");
@@ -114,5 +116,38 @@ public class SignupActivity extends AppCompatActivity {
                 });
         RequestQueue requestQueue = Volley.newRequestQueue(SignupActivity.this);
         requestQueue.add(stringRequest);
+    }
+    private void sendOTP(final ProgressDialog  progressDialog)
+    {
+
+        final String email=SharedPrefManager.getInstance(this).getUserEmail();
+
+        String url = Constants.SEND_OTP + "?email=" + email;
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        response = response.trim();
+                        OTP = response;
+                        Toast.makeText(SignupActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(SignupActivity.this, OTPVerificationActivity.class);
+                        intent.putExtra("otp",OTP);
+                        Toast.makeText(SignupActivity.this, "OTP :"+OTP, Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        finish();
+                        overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+                        progressDialog.dismiss();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(SignupActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 }

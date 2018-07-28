@@ -2,14 +2,17 @@ package com.example.shivamvk.facebookandroid;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,6 +29,7 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
 
     private Button btSubmitButton;
     private EditText et1OTPVerification,et2OTPVerification,et3OTPVerification,et4OTPVerification;
+    private TextView tvResendOTP;
     private String OTP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +37,14 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
         setContentView(R.layout.activity_otp_verification);
 
         setTitle("OTP Verification");
+        tvResendOTP=findViewById(R.id.tv_resend_otp);
 
-        sendOTP();
+        resendOTPTimer();
+
+        //sendOTP();
+
+        OTP=getIntent().getStringExtra("otp");
+        Toast.makeText(this, "OTP A"+OTP, Toast.LENGTH_SHORT).show();
 
         btSubmitButton=findViewById(R.id.bt_otp_verification_activity_submit_button);
         btSubmitButton.setEnabled(false);
@@ -45,76 +55,66 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
         et3OTPVerification=findViewById(R.id.et3_otp_verification);
         et4OTPVerification=findViewById(R.id.et4_otp_verification);
 
+
+        btSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifyOTP();
+            }
+        });
         et1OTPVerification.addTextChangedListener(this);
         et2OTPVerification.addTextChangedListener(this);
         et3OTPVerification.addTextChangedListener(this);
         et4OTPVerification.addTextChangedListener(this);
-
-        String et1OTP=et1OTPVerification.getText().toString();
-        String et2OTP=et2OTPVerification.getText().toString();
-        String et3OTP=et3OTPVerification.getText().toString();
-        String et4OTP=et4OTPVerification.getText().toString();
-
-       final String userOTP=et1OTP+et2OTP+et3OTP+et4OTP;
-
-
-        if(!et1OTP.isEmpty() && !et2OTP.isEmpty() && !et3OTP.isEmpty() && !et4OTP.isEmpty()){
-            btSubmitButton.setEnabled(true);
-
-        }
-        btSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verifyOTP(userOTP);
-            }
-        });
+    }
+    private void resendOTPTimer(){
+        new CountDownTimer(30000,1000){
+                public void onTick(long millisUntilFinished){
+                    tvResendOTP.setText("Resend OTP ("+millisUntilFinished/1000+")");
+                }
+                public void onFinish(){
+                    tvResendOTP.setBackgroundColor(getResources().getColor(R.color.resendOTPGreen));
+                }
+        }.start();
     }
 
-    private String generateOTP(){
-        int otpLength=4;
-        String OTP;
-        SecureRandom secureRandom=new SecureRandom();
-        StringBuilder stringBuilder=new StringBuilder();
-        for(int i=0;i<otpLength;i++){
-            int number=secureRandom.nextInt(9);
-            if(number==0 && i==0){
-                i=-1;
-                continue;
-            }
-            stringBuilder.append(number);
-        }
-        OTP=stringBuilder.toString();
-        return OTP;
-    }
 
     private void sendOTP()
     {
 
         final String email=SharedPrefManager.getInstance(this).getUserEmail();
 
-        OTP=generateOTP();
-
-
-        String url = Constants.SEND_OTP + "?email=" + email + "?otp=" + OTP;
+        String url = Constants.SEND_OTP + "?email=" + email;
         StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-
+                        response = response.trim();
+                        OTP = response;
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(OTPVerificationActivity.this, "error", Toast.LENGTH_SHORT).show();
                     }
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
     }
-    private void verifyOTP(String userOTP){
+    private void verifyOTP(){
+        String et1OTP=et1OTPVerification.getText().toString();
+        String et2OTP=et2OTPVerification.getText().toString();
+        String et3OTP=et3OTPVerification.getText().toString();
+        String et4OTP=et4OTPVerification.getText().toString();
+
+
+
+        final String userOTP=et1OTP+et2OTP+et3OTP+et4OTP;
+        Log.i("OTP ENTERED", "onCreate: "+userOTP);
+
+        Toast.makeText(this, "OTP FINAL"+userOTP, Toast.LENGTH_SHORT).show();
 
         ProgressDialog progressDialog=new ProgressDialog(OTPVerificationActivity.this);
         progressDialog.setMessage("Verifying OTP...");
@@ -158,8 +158,12 @@ public class OTPVerificationActivity extends AppCompatActivity implements TextWa
             if(et3OTPVerification.length()==1){
                 et4OTPVerification.requestFocus();
             }
+            if (et4OTPVerification.length()==1){
+                btSubmitButton.setEnabled(true);
+            }
         } else if(editable.length()==0){
             if(et4OTPVerification.length()==0){
+                btSubmitButton.setEnabled(false);
                 et3OTPVerification.requestFocus();
             }
             if(et3OTPVerification.length()==0){

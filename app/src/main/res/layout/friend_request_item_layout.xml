@@ -21,6 +21,7 @@
             <ImageView
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:scaleType="centerCrop"
                 android:layout_marginTop="12dp"
                 android:src="@drawable/placeholderboy"
                 android:id="@+id/iv_friend_request_item_user_image"/>
