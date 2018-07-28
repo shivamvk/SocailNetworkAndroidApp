@@ -3,4 +3,5 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#007466</color>
     <color name="colorAccent">#2E8B57</color>
+    <color name="resendOTPGreen">#9CCC65</color>
 </resources>
