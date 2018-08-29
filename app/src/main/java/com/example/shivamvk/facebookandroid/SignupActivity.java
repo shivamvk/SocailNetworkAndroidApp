@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
                             case "okay":
                                 Toast.makeText(SignupActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
                                 SharedPrefManager.getInstance(SignupActivity.this).resgiterCurrentUser(name, "NULL", email);
-                                startActivity(new Intent(SignupActivity.this, OTPVerificationActivity.class));
+                                startActivity(new Intent(SignupActivity.this, SelectUserImage.class));
                                 finish();
                                 overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
                                 progressDialog.dismiss();
